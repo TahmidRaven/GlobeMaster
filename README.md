@@ -8,6 +8,10 @@
 
 **GlobeMaster** is an interactive geography quiz game where players test their knowledge of world **flags** and **capitals**. Compete against others on the **leaderboard**, earn points, and see where you stand globally!
 
+## TIP FOR THOSE WHO WOULD USE FIREBASE & GITHUB PAGES HOSTING: 
+make sure you add the github domain to your authorized firebase domains 
+```Firebase Console → Authentication → Settings → Authorized Domains```
+
 Players can:
 
 - Identify flags in the **Flag Challenge**.
