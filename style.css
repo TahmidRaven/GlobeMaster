@@ -1,0 +1,7 @@
+body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color:#f4f4f4; color:#222;}
+header { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:20px; }
+button { margin: 5px; padding: 10px 20px; cursor: pointer; border-radius:5px; border:none; background-color:#4CAF50; color:white; font-weight:bold;}
+button:hover { background-color:#45a049; }
+img { max-width: 200px; margin: 10px; border:1px solid #ccc; border-radius:5px;}
+section { margin: 20px 0; padding:15px; border-radius:5px; background-color:white; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+h1, h2 { margin:10px 0; }

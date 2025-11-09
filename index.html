@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobeMaster 🌐</title>
+
+<!-- Favicon -->
+<link rel="icon" href="globemasterlogo.png" type="image/png">
+<link rel="apple-touch-icon" href="globemasterlogo.png">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class', 
+    theme: {
+      extend: {
+        colors: {
+          mainDark: '#10002b',
+          mainHover: '#240046',
+          mainActive: '#3c096c',
+          mainAccent: '#ff9100',
+          cardBg: '#ffffffcc',
+          cardBgDark: '#1f2937cc'
+        },
+        fontFamily: {
+          display: ['Poppins', 'sans-serif'],
+          body: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<!-- <body class="min-h-screen flex flex-col items-center p-4 bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-body transition-colors duration-500"> -->
+<body class="min-h-screen flex flex-col items-center p-4 text-gray-800 dark:text-gray-100 font-body transition-colors duration-500"
+      style="background: url('bg_blurred.jpg') center/cover no-repeat;">
+
+
+<!-- Header -->
+<header class="w-full max-w-5xl flex items-center justify-between mb-8 p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+<!-- Add Font Awesome CDN in head -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Add Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+<!-- Updated GlobeMaster Title -->
+<h1 class="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ff6d00] to-[#ff9100] flex items-center gap-3" style="font-family: 'Fredoka One', cursive;">
+  <img src="globemasterlogo.png" alt="Logo" class="w-12 h-12 rounded-full">
+  GlobeMaster <i class="fas fa-globe-americas text-[#ff9100]"></i>
+</h1>
+
+
+  
+  <!-- Account Dropdown -->
+  <div class="relative" id="account-dropdown">
+    <button id="account-btn" class="flex items-center px-4 py-2 rounded-lg font-medium shadow-md
+      bg-mainDark text-white hover:bg-mainHover hover:text-mainAccent active:bg-mainActive transition-all">
+     <img id="user-pfp" src="" alt="Profile" class="w-8 h-8 rounded-full hidden">
+     <span id="user-name">Login</span>
+     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+     </svg>
+    </button>
+
+    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 hidden flex-col z-10 transition-colors duration-500">
+      <button id="login-btn" class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition">Login with Google</button>
+      <button id="logout-btn" class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition hidden">Logout</button>
+    </div>
+  </div>
+</header>
+
+<main class="w-full max-w-5xl flex flex-col items-center gap-6">
+
+<!-- Flag Challenge -->
+<section id="flag-challenge" class="w-full bg-cardBg dark:bg-cardBgDark rounded-xl shadow flex flex-col items-center transition-colors duration-500 hidden">
+  <div class="w-full text-center pt-4">
+    <h2 class="text-2xl font-bold text-accentPurple dark:text-accentPurple">Flag Challenge</h2>
+  </div>
+
+  <div class="flex flex-col items-center gap-4 p-6">
+    <img id="flag-img" class="w-64 h-40 object-contain rounded-md border border-gray-300 dark:border-gray-600 shadow-sm" src="" alt="Flag">
+    <div id="flag-options" class="flex flex-wrap justify-center gap-3"></div>
+  </div>
+</section>
+
+<!-- Capital Challenge -->
+<section id="capital-challenge" class="w-full bg-cardBg dark:bg-cardBgDark rounded-xl shadow flex flex-col items-center transition-colors duration-500 hidden">
+  <div class="w-full text-center pt-4">
+    <h2 class="text-2xl font-bold text-accentPink dark:text-accentPink">Capital Challenge</h2>
+  </div>
+
+  <div class="flex flex-col items-center gap-4 p-6">
+    <p id="capital-question" class="text-lg font-medium text-accentBlue dark:text-accentBlue mb-3"></p>
+    <div id="capital-options" class="flex flex-wrap justify-center gap-3"></div>
+  </div>
+</section>
+
+<!-- Play Again Button -->
+<section id="play-again-section" class="w-full flex justify-center mt-6 hidden">
+  <button id="play-again-btn" class="px-6 py-3 rounded-lg font-bold shadow-md
+    bg-mainDark text-white hover:bg-mainHover hover:text-mainAccent active:bg-mainActive transition-all">
+    Play Again
+  </button>
+</section>
+
+<!-- Leaderboard -->
+<section id="leaderboard" class="w-full p-6 bg-cardBg dark:bg-cardBgDark rounded-xl shadow flex flex-col items-center gap-4 transition-colors duration-500">
+  <h2 class="text-2xl font-bold text-accentGreen dark:text-green-400">Leaderboard</h2>
+  <div id="top-scores" class="w-full flex flex-col items-center gap-2 mt-2 text-blue-900 dark:text-black-100"></div>
+</section>
+
+</main>
+
+<script type="module">
+import { submitScore, listenToTopScores, auth, loginWithGoogle, logout } from "./firebase.js";
+
+let countries = [];
+let flagPoints = 0;
+let capitalPoints = 0;
+const flagRounds = 10;
+const capitalRounds = 10;
+let user = null;
+
+// Account Dropdown
+const accountBtn = document.getElementById("account-btn");
+const dropdownMenu = document.getElementById("dropdown-menu");
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+const userName = document.getElementById("user-name");
+const userPfp = document.getElementById("user-pfp");
+
+accountBtn.addEventListener("click", () => {
+  dropdownMenu.classList.toggle("hidden");
+});
+
+auth.onAuthStateChanged((u) => {
+  user = u;
+  if(u){
+    loginBtn.classList.add("hidden");
+    logoutBtn.classList.remove("hidden");
+    userName.textContent = u.displayName;
+    if(u.photoURL){
+      userPfp.src = u.photoURL;
+    } else {
+      userPfp.src = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+    }
+    userPfp.classList.remove("hidden");
+  } else {
+    loginBtn.classList.remove("hidden");
+    logoutBtn.classList.add("hidden");
+    userName.textContent = "Login";
+    userPfp.classList.add("hidden");
+  }
+});
+
+loginBtn.onclick = async () => {
+  const loggedIn = await loginWithGoogle();
+  if(loggedIn) alert(`Welcome, ${loggedIn.displayName}!`);
+  dropdownMenu.classList.add("hidden");
+};
+logoutBtn.onclick = () => { logout(); alert("Logged out successfully!"); dropdownMenu.classList.add("hidden"); };
+
+// Fetch countries
+async function fetchCountries(){
+  try{
+    const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,capital");
+    const data = await res.json();
+    return data.map(c=>({name:c.name.common, flag:c.flags.svg, capital:c.capital?c.capital[0]:"N/A"}));
+  } catch(err){
+    console.error(err);
+    alert("Failed to fetch countries.");
+    return [];
+  }
+}
+
+// Helpers
+function getRandomItems(arr,n){ return [...arr].sort(()=>0.5-Math.random()).slice(0,n); }
+
+// Flag Challenge
+function startFlagChallenge(){
+  const challengeCountries = getRandomItems(countries, flagRounds);
+  const flagSection = document.getElementById("flag-challenge");
+  flagSection.style.display = "block";
+  let round=0;
+
+  function nextFlag(){
+    if(round>=flagRounds){
+      flagSection.style.display="none";
+      startCapitalChallenge();
+      return;
+    }
+    const country = challengeCountries[round];
+    document.getElementById("flag-img").src = country.flag;
+
+    const optionsDiv = document.getElementById("flag-options");
+    const options = getRandomItems(countries, 3);
+    options.push(country);
+    options.sort(()=>0.5-Math.random());
+
+    optionsDiv.innerHTML = "";
+    options.forEach(opt=>{
+      const btn = document.createElement("button");
+      btn.textContent = opt.name;
+      btn.className = "px-4 py-2 m-1 rounded-lg font-bold shadow-md bg-mainDark text-white hover:bg-mainHover hover:text-mainAccent active:bg-mainActive transition-all";
+      btn.onclick = ()=>{ if(opt.name===country.name) flagPoints++; round++; nextFlag(); };
+      optionsDiv.appendChild(btn);
+    });
+  }
+  nextFlag();
+}
+
+// Capital Challenge
+function startCapitalChallenge(){
+  const challengeCountries = getRandomItems(countries, capitalRounds);
+  const capitalSection = document.getElementById("capital-challenge");
+  capitalSection.style.display="block";
+  let round=0;
+
+  function nextCapital(){
+    if(round>=capitalRounds){
+      capitalSection.style.display="none";
+      gameOver();
+      return;
+    }
+
+    const country = challengeCountries[round];
+    document.getElementById("capital-question").textContent = `Which country has the capital ${country.capital}?`;
+
+    const optionsDiv = document.getElementById("capital-options");
+    const options = getRandomItems(countries,3);
+    options.push(country);
+    options.sort(()=>0.5-Math.random());
+
+    optionsDiv.innerHTML="";
+    options.forEach(opt=>{
+      const btn = document.createElement("button");
+      btn.textContent = opt.name;
+      btn.className = "px-4 py-2 m-1 rounded-lg font-bold shadow-md bg-mainDark text-white hover:bg-mainHover hover:text-mainAccent active:bg-mainActive transition-all";
+      btn.onclick = ()=>{ if(opt.name===country.name) capitalPoints++; round++; nextCapital(); };
+      optionsDiv.appendChild(btn);
+    });
+  }
+  nextCapital();
+}
+
+// Game Over
+function gameOver(){
+  const total = flagPoints + capitalPoints;
+  alert(`Game over! You scored ${total} points.`);
+  if(user) submitScore(total);
+
+  // Show play again
+  const playAgainSection = document.getElementById("play-again-section");
+  playAgainSection.classList.remove("hidden");
+  const playAgainBtn = document.getElementById("play-again-btn");
+  playAgainBtn.onclick = restartGame;
+}
+
+// Restart
+function restartGame(){
+  flagPoints=0;
+  capitalPoints=0;
+  document.getElementById("play-again-section").classList.add("hidden");
+  document.getElementById("flag-challenge").style.display="none";
+  document.getElementById("capital-challenge").style.display="none";
+  startFlagChallenge();
+}
+
+// Leaderboard
+function showLeaderboard(){
+  const div = document.getElementById("top-scores");
+  listenToTopScores((scores)=>{
+    div.innerHTML="";
+    if(!scores.length){ div.innerHTML="<p>No scores yet. Play and be the first!</p>"; return; }
+    scores.forEach((s,i)=>{
+      const entry = document.createElement("div");
+      entry.className = "w-full flex justify-between bg-gray-100 px-4 py-2 rounded-lg shadow border mb-1 transition-all";
+      if(i===0) entry.classList.add("border-accentGreen","text-accentGreen","font-bold");
+      else if(i===1) entry.classList.add("border-accentBlue","text-accentBlue");
+      else if(i===2) entry.classList.add("border-accentPurple","text-accentPurple");
+      if(user && s.name===user.displayName) entry.classList.add("bg-yellow-100","border-yellow-500","font-semibold");
+      entry.innerHTML=`<span>${i+1}. ${s.name}</span><span>${s.score}</span>`;
+      div.appendChild(entry);
+    });
+  });
+}
+
+// Init
+window.onload=async()=>{
+  countries = await fetchCountries();
+  if(!countries.length) return alert("Failed to load country data.");
+  document.getElementById("flag-challenge").style.display="none";
+  document.getElementById("capital-challenge").style.display="none";
+  startFlagChallenge();
+  showLeaderboard();
+};
+</script>
+
+</body>
+</html>
